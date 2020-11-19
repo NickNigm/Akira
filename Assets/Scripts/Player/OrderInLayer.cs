@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
-[RequireComponent(typeof(SpriteRenderer))]
+[ExecuteInEditMode]//Con esto podemos ver los cambios sin necesidad de darle play
+[RequireComponent(typeof(SpriteRenderer))]//Para agrager el componente de spriterenderer de forma automatica
 public class OrderInLayer : MonoBehaviour
 {
-    SpriteRenderer sr; 
+    SpriteRenderer sr;//Definimos nuestro sprite render 
     
- 
-    // Start is called before the first frame update
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();   
+        sr = GetComponent<SpriteRenderer>();//Inicializamos el sprite renderer   
     }
 
-    // Update is called once per frame
     void Update()
     {
+        /*Modificamos la capa en la que se encuentra el 
+        jugador dependiendo de su posicion en Y*/
         sr.sortingOrder = -(int)(transform.position.y * 100);
     }
 }

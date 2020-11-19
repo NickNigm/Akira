@@ -4,26 +4,30 @@ using UnityEngine;
 
 public class Dash : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Animator animator;
-    public float velDash;
-    private float duracionDash;
-    public float tiempoInicialDash;
-    private int direccion;
+    private Rigidbody2D rb;//Para acceder al rigidbody del jugador
+    private Animator animator;//Para acceder al animator
+    public float velDash;//Velocidad del dash
+    private float duracionDash;//Duracion del dash
+    public float tiempoInicialDash;//Tiempo en el que inicia el dash
+    private int direccion;//XD
 
-    // Start is called before the first frame update
+    //Inicializamos nuestras variables para acceder a los componentes
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        duracionDash = tiempoInicialDash;
+        duracionDash = tiempoInicialDash;//El tiempo que dura el dash es el tiempo en el que inicia
     }
 
-    // Update is called once per frame
     void Update()
     {
+        /*Dash
+        Delimitamos el valor de la direccion de acuerdo a la tecla que presionemos*/
         if(direccion == 0)
         {
+            /*Se presiona izquierda, derecha, arriba, abajo. 
+            Direccion = 1, 2, 3, 4.
+            Activamos nuestra animacion de sprint*/
             if(Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 direccion = 1;
@@ -40,19 +44,25 @@ public class Dash : MonoBehaviour
             }
             
         }else{
+            /*Comprobamos que estamos dasheando.
+            Si nuestra duracion del dash es mayor a 0 quiere decir que si.*/
             if(duracionDash <= 0 )
             {
-                direccion = 0;
-                duracionDash = tiempoInicialDash;
-                rb.velocity = Vector2.zero;
-                animator.SetBool("IsSprinting", false);
+                //Si ya no dasheamos
+                direccion = 0;//Direccion regresa a 0
+                duracionDash = tiempoInicialDash;//Reiniciamos la duracion del dash
+                rb.velocity = Vector2.zero;//Velocidad se establece en 0
+                animator.SetBool("IsSprinting", false);//La animacion de sprinting se desactiva
             }else{
+                //Si seguimos dasheando reducimos el tiempo del dash 
                 duracionDash -= Time.deltaTime;
 
+                //El lugar a donde nos reposicionaremos dependiendo del valor de nuestra direccion
                 switch(direccion)
                 {
                     case 1:
-                        rb.position = rb.position + (Vector2.left * velDash);
+                        rb.position = rb.position + (Vector2.left * velDash);/*Modificamos nuestra direccion
+                        sumandole la direccion por la velocidad con la que se efectuara esta*/
                         break;
                     case 2:
                         rb.position = rb.position + (Vector2.right * velDash);
