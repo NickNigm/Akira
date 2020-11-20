@@ -874,6 +874,7 @@ GameObject:
   - component: {fileID: 820832950}
   - component: {fileID: 820832949}
   - component: {fileID: 820832947}
+  - component: {fileID: 820832952}
   - component: {fileID: 820832942}
   - component: {fileID: 820832945}
   - component: {fileID: 820832948}
@@ -1015,7 +1016,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820832941}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c03375c3e9e3cb74da0f63a2b8aa10d6, type: 3}
   m_Name: 
@@ -1069,7 +1070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d7d0cf3ace9f24b962f1b319859b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuerzaSalto: 1
+  fuerzaSalto: 200
+  posInicialSalto: 0
 --- !u!114 &820832951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1087,6 +1089,19 @@ MonoBehaviour:
   capaAfectada:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &820832952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820832941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36af811b43a54054b86d28585575ce37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidad: 7
 --- !u!1 &1042874883
 GameObject:
   m_ObjectHideFlags: 0
