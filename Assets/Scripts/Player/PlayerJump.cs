@@ -4,37 +4,45 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody2D rb2d;
     private Animator animator;
+    bool puedeSaltar = true, comprobandoSalto = false;
     public float fuerzaSalto;
+    public float posInicialSalto;
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
+    void Start(){
+        rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        StartCoroutine(Salto());
+    
+    void Update() {
+        StartCoroutine(salto());
+        if(comprobandoSalto) compararPosicion();
     }
 
-    Vector2 posOriginal;
-    IEnumerator Salto()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            posOriginal = new Vector2(rb.position.x, rb.position.y);
-            animator.SetBool("IsJumping", true);
-            posOriginal.y = rb.position.y;
-            rb.position = rb.position + (Vector2.up * fuerzaSalto);
-            yield return new WaitForSeconds(1);
-            animator.SetBool("IsJumping", false);
-            rb.position = new Vector2(rb.position.x, posOriginal.y);
-        } 
+    IEnumerator salto(){
+        bool saltando = Input.GetKey(KeyCode.Space);
+        if(saltando && puedeSaltar){
+            posInicialSalto = transform.position.y;
+            rb2d.gravityScale = 1;
+            rb2d.AddForce(new Vector2(0, fuerzaSalto));
+            puedeSaltar = false;
+            yield return new WaitForSeconds(0.1f);
+            comprobandoSalto = true;
+        }
     }
 
+    void compararPosicion(){
+        if(posInicialSalto > transform.position.y){
+            rb2d.constraints = RigidbodyConstraints2D.FreezePositionY;
+            rb2d.gravityScale = 0;
+            puedeSaltar = true;
+            comprobandoSalto = false;
+            rb2d.constraints = RigidbodyConstraints2D.None;
+            rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+    }
 }
