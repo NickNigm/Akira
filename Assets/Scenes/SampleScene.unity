@@ -1040,8 +1040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09300d6bd0d22244bf781993f0e5936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velDash: 0.03
-  tiempoInicialDash: 0.1
+  velDash: 10
+  tiempoInicialDash: 0.09
 --- !u!114 &820832951
 MonoBehaviour:
   m_ObjectHideFlags: 0

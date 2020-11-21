@@ -58,7 +58,7 @@ public class playerMov : MonoBehaviour
     }
 
     void compararPosicion(){
-        if(posInicialSalto => transform.position.y){ //Comprueba si la posicion antes de saltar es menor o igual a la posicion que tiene actualemtne
+        if(posInicialSalto > transform.position.y){ //Comprueba si la posicion antes de saltar es menor o igual a la posicion que tiene actualemtne
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionY; //Congela la posicion en Y
             rb2d.gravityScale = 0; //Desactiva la gravedad
             puedeSaltar = true;
