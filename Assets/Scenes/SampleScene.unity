@@ -870,9 +870,11 @@ GameObject:
   m_Component:
   - component: {fileID: 820832944}
   - component: {fileID: 820832943}
+  - component: {fileID: 820832950}
+  - component: {fileID: 820832947}
+  - component: {fileID: 820832952}
   - component: {fileID: 820832951}
   - component: {fileID: 820832949}
-  - component: {fileID: 820832952}
   - component: {fileID: 820832942}
   - component: {fileID: 820832945}
   - component: {fileID: 820832948}
@@ -1007,6 +1009,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27324867, y: 0.35238993}
   m_EdgeRadius: 0
+--- !u!114 &820832947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820832941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4c132e5f275c044ad83611bff6303b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sPlayerMov: {fileID: 820832952}
+  sPlayerController: {fileID: 820832950}
 --- !u!50 &820832948
 Rigidbody2D:
   serializedVersion: 4
@@ -1042,6 +1058,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velDash: 0.03
   tiempoInicialDash: 0.1
+--- !u!114 &820832950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820832941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b653baec7f1b4d44f94b968f7c1abb84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidad: 0
+  volando: 0
 --- !u!114 &820832951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,6 +1101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36af811b43a54054b86d28585575ce37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sPlayerController: {fileID: 820832950}
+  puedeSaltar: 1
+  comprobandoSalto: 0
   fuerzaSalto: 200
   posInicialSalto: 0
 --- !u!1 &1042874883
