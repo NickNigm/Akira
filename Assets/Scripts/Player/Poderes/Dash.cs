@@ -11,6 +11,8 @@ public class Dash : MonoBehaviour
     public float tiempoInicialDash;//Tiempo en el que inicia el dash
     private int direccion;//XD
 
+    bool puedeDash = true;
+
     //Inicializamos nuestras variables para acceder a los componentes
     void Start()
     {
@@ -21,27 +23,31 @@ public class Dash : MonoBehaviour
 
     void Update()
     {
+        fDash();
+    }
+
+    void direccionDash(int dir, Vector2 vector){
+        direccion = dir;
+        animator.SetBool("IsSprinting", true);
+        /*if(duracionDash > 0){
+            duracionDash -= Time.deltaTime;
+            if(direccion!=0) rb.position += vector * velDash; 
+        } */
+    }
+
+    void fDash(){
         /*Dash
         Delimitamos el valor de la direccion de acuerdo a la tecla que presionemos*/
         if(direccion == 0)
         {
+            
             /*Se presiona izquierda, derecha, arriba, abajo. 
             Direccion = 1, 2, 3, 4.
             Activamos nuestra animacion de sprint*/
-            if(Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                direccion = 1;
-                animator.SetBool("IsSprinting", true);
-            }else if(Input.GetKeyDown(KeyCode.RightArrow)){
-                direccion = 2;
-                animator.SetBool("IsSprinting", true);
-            }else if(Input.GetKeyDown(KeyCode.UpArrow)){
-                direccion = 3;
-                animator.SetBool("IsSprinting", true);
-            }else if(Input.GetKeyDown(KeyCode.DownArrow)){
-                direccion = 4;
-                animator.SetBool("IsSprinting", true);
-            }
+            if(Input.GetKeyDown(KeyCode.LeftArrow)) direccionDash(1, Vector2.left);
+            if(Input.GetKeyDown(KeyCode.RightArrow)) direccionDash(2, Vector2.right);
+            if(Input.GetKeyDown(KeyCode.UpArrow)) direccionDash(3, Vector2.up);
+            if(Input.GetKeyDown(KeyCode.DownArrow)) direccionDash(4, Vector2.down);
             
         }else{
             /*Comprobamos que estamos dasheando.
@@ -61,9 +67,9 @@ public class Dash : MonoBehaviour
                 switch(direccion)
                 {
                     case 1:
-                        rb.position = rb.position + (Vector2.left * velDash);/*Modificamos nuestra direccion
-                        sumandole la direccion por la velocidad con la que se efectuara esta*/
-                        break;
+                        rb.position = rb.position + (Vector2.left * velDash);//Modificamos nuestra direccion
+                        //sumandole la direccion por la velocidad con la que se efectuara esta
+                        break; 
                     case 2:
                         rb.position = rb.position + (Vector2.right * velDash);
                         break;
@@ -78,6 +84,5 @@ public class Dash : MonoBehaviour
 
             }
         }   
-        
     }
 }
