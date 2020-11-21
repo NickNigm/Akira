@@ -10,15 +10,13 @@ public class playerMov : MonoBehaviour
     private Animator animator;
 
     //Variables para limitar el salto a 1 y comprobar si se debe medir la distancia del salto
-    public bool puedeSaltar = true;
-    public bool comprobandoSalto = false;
+    bool puedeSaltar = true, comprobandoSalto = false;
     public float fuerzaSalto;
     public float posInicialSalto; //Guarda la posicion en Y del objeto antes de saltar
-    public float velocidad; //Velocidad de movimiento
+    float velocidad = 5f; //Velocidad de movimiento
 
     //Iniciamos los componenetes
     void Start(){
-        velocidad = 2f;
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -31,7 +29,7 @@ public class playerMov : MonoBehaviour
         if(comprobandoSalto) compararPosicion(); //Comprueba el la distancia entre el punto de salto y la pocición actual
     }
 
-    public void Mover() {
+    private void Mover() {
         float posX = velocidad * Time.deltaTime * Input.GetAxisRaw("Horizontal"); //asigna el movimiento del eje X a posX
         transform.position += new Vector3(posX, 0, 0); // PosX agrega el movimiento en el eje X
         
@@ -49,7 +47,7 @@ public class playerMov : MonoBehaviour
     void salto(){
         bool saltando = Input.GetKey(KeyCode.Space); // se asigna si se preciono Spacio para saltar
         if(saltando && puedeSaltar){ //Se comprubea si se preciono Espacio y Puede saltar
-            asignarVelocidad(1f);
+            velocidad = 2f;
             posInicialSalto = transform.position.y; //Se asigna la posicion antes de saltar
             rb2d.gravityScale = 1; //Se activa la gravedad
             rb2d.AddForce(new Vector2(0, fuerzaSalto));
@@ -59,22 +57,16 @@ public class playerMov : MonoBehaviour
         }
     }
 
-    public void compararPosicion(){
-        if(posInicialSalto > transform.position.y){ //Comprueba si la posicion antes de saltar es menor o igual a la posicion que tiene actualemtne
+    void compararPosicion(){
+        if(posInicialSalto => transform.position.y){ //Comprueba si la posicion antes de saltar es menor o igual a la posicion que tiene actualemtne
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionY; //Congela la posicion en Y
             rb2d.gravityScale = 0; //Desactiva la gravedad
             puedeSaltar = true;
             comprobandoSalto = false;
-            asignarVelocidad(2f);
+            velocidad = 5f;
             animator.SetBool("IsJumping", false);
             rb2d.constraints = RigidbodyConstraints2D.None; //Descongelamos la rotacion y Movimientos
             rb2d.constraints = RigidbodyConstraints2D.FreezeRotation; //Congelamos la rotación
-        }else{
-            asignarVelocidad(1f);
         }
-    }
-
-    public void asignarVelocidad(float vel){
-        velocidad = vel;
     }
 }
