@@ -4,85 +4,65 @@ using UnityEngine;
 
 public class Dash : MonoBehaviour
 {
-    private Rigidbody2D rb;//Para acceder al rigidbody del jugador
-    private Animator animator;//Para acceder al animator
-    public float velDash;//Velocidad del dash
-    private float duracionDash;//Duracion del dash
-    public float tiempoInicialDash;//Tiempo en el que inicia el dash
-    private int direccion;//XD
 
-    bool puedeDash = true;
+    public playerMov sPlayerMov; //cominicamos con el script playerMov
+    public playerController sPC; //cominicamos con el script playerController
+    public float fuerzaDash;
+    public float desplazamiento; //La distancia maxima del desplazamiento
+    public float inicioDash; //la pocision inicial antes de desplazarse
+    public int energiaNecesaria;
+    private Rigidbody2D rb2d;
+    private SpriteRenderer sr;
 
-    //Inicializamos nuestras variables para acceder a los componentes
+    public bool desplazandose = false;
+    public bool puedeDash = true;
+    public bool derecha; //para comprobar de que lado se ejecuta el dash derecha o izquierda
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        duracionDash = tiempoInicialDash;//El tiempo que dura el dash es el tiempo en el que inicia
+        rb2d = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
+    // Update is called once per frame
     void Update()
     {
-        fDash();
+        dash();
+        if(desplazandose)comparacionDash(); //Comprobamos la distancia del dash
     }
 
-    void direccionDash(int dir, Vector2 vector){
-        direccion = dir;
-        animator.SetBool("IsSprinting", true);
-        /*if(duracionDash > 0){
-            duracionDash -= Time.deltaTime;
-            if(direccion!=0) rb.position += vector * velDash; 
-        } */
-    }
-
-    void fDash(){
-        /*Dash
-        Delimitamos el valor de la direccion de acuerdo a la tecla que presionemos*/
-        if(direccion == 0)
-        {
-            
-            /*Se presiona izquierda, derecha, arriba, abajo. 
-            Direccion = 1, 2, 3, 4.
-            Activamos nuestra animacion de sprint*/
-            if(Input.GetKeyDown(KeyCode.LeftArrow)) direccionDash(1, Vector2.left);
-            if(Input.GetKeyDown(KeyCode.RightArrow)) direccionDash(2, Vector2.right);
-            if(Input.GetKeyDown(KeyCode.UpArrow)) direccionDash(3, Vector2.up);
-            if(Input.GetKeyDown(KeyCode.DownArrow)) direccionDash(4, Vector2.down);
-            
-        }else{
-            /*Comprobamos que estamos dasheando.
-            Si nuestra duracion del dash es mayor a 0 quiere decir que si.*/
-            if(duracionDash <= 0 )
-            {
-                //Si ya no dasheamos
-                direccion = 0;//Direccion regresa a 0
-                duracionDash = tiempoInicialDash;//Reiniciamos la duracion del dash
-                rb.velocity = Vector2.zero;//Velocidad se establece en 0
-                animator.SetBool("IsSprinting", false);//La animacion de sprinting se desactiva
-            }else{
-                //Si seguimos dasheando reducimos el tiempo del dash 
-                duracionDash -= Time.deltaTime;
-
-                //El lugar a donde nos reposicionaremos dependiendo del valor de nuestra direccion
-                switch(direccion)
-                {
-                    case 1:
-                        rb.position = rb.position + (Vector2.left * velDash);//Modificamos nuestra direccion
-                        //sumandole la direccion por la velocidad con la que se efectuara esta
-                        break; 
-                    case 2:
-                        rb.position = rb.position + (Vector2.right * velDash);
-                        break;
-                    case 3:
-                        rb.position = rb.position + (Vector2.up * velDash);
-                        break;
-                    case 4:
-                        rb.position = rb.position + (Vector2.down * velDash);
-                        break;
-
-                }
-
+    void dash(){
+        bool dashing = Input.GetKey(KeyCode.LeftShift);
+        if(dashing && puedeDash && (sPC.energia>=energiaNecesaria)){ //Puede hacer el dash solo si; se preciono lshifth, puede puedeDash=true y la energia es igual o mayor a la necesaria
+            desplazandose = true;
+            inicioDash = transform.position.x; //Guardamos la pocision del dash
+            rb2d.gravityScale = 1;
+            if(sPlayerMov.puedeSaltar==true)rb2d.constraints = RigidbodyConstraints2D.FreezePositionY; // conngelamos en y solo si no esta saltando
+            //rb2d.AddForce(new Vector2(fuerzaDash, 0));
+            if(sr.flipX){//tenerminamos la direccion del dash
+                rb2d.AddForce(Vector2.left * fuerzaDash);
+                derecha = false; 
+            }else{//tenerminamos la direccion del dash
+                rb2d.AddForce(Vector2.right * fuerzaDash);
+                derecha = true;
             }
-        }   
+            puedeDash = false;
+            sPC.cambioEnergia(energiaNecesaria, true); //cambiamos la energia actual
+        }
+    }
+
+    void comparacionDash(){
+        //comprobamos el desplazamiento
+        if(derecha == true)if(transform.position.x > (inicioDash + desplazamiento)) detener();
+        if(derecha == false) if(transform.position.x < (inicioDash - desplazamiento)) detener();
+    }
+
+
+    void detener(){
+        rb2d.constraints = RigidbodyConstraints2D.FreezePositionX; //congelamos en x
+        if(sPlayerMov.puedeSaltar==true) rb2d.gravityScale = 0; //desactivamos la gravedad solo si no esta saltando
+        rb2d.constraints = RigidbodyConstraints2D.None; //activamos x,y,z y la rotacion
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation; //desactivamos la rotacion
+        desplazandose = false;
+        puedeDash = true;
     }
 }

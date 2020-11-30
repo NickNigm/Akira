@@ -16,12 +16,13 @@ public class playerMov : MonoBehaviour
     public bool puedeSaltar = true;
     public bool comprobandoSalto = false;
     public float fuerzaSalto;
+    public float velocidad;
     public float posInicialSalto; //Guarda la posicion en Y del objeto antes de saltar
     //public float velocidad; //Velocidad de movimiento
 
     //Iniciamos los componenetes
     void Start(){
-        sPlayerController.asignarVelocidad(2f);
+        asignarVelocidad(2f);
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -35,16 +36,23 @@ public class playerMov : MonoBehaviour
     }
 
     public void Mover() {
-        float posX = sPlayerController.velocidad * Time.deltaTime * Input.GetAxisRaw("Horizontal"); //asigna el movimiento del eje X a posX
+        float posX = velocidad * Time.deltaTime * Input.GetAxisRaw("Horizontal"); //asigna el movimiento del eje X a posX
         transform.position += new Vector3(posX, 0, 0); // PosX agrega el movimiento en el eje X
         
         if( posX != 0 ) sr.flipX = posX < 0; //Inivter el sprite al moverse atras en el eje X
 
         //Comprueba si el objeto puede saltar
+<<<<<<< Updated upstream
         if(puedeSaltar){
             //Cambia la animacion a Correr si se preciona A o D
             animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D));
             float posY = sPlayerController.velocidad * Time.deltaTime * Input.GetAxisRaw("Vertical"); //asigna el movimiento del eje Y a posY
+=======
+        if(puedeSaltar && !Input.GetKey(KeyCode.LeftShift)){
+            //Cambia la animacion a Correr si se preciona A, S, D o W
+            animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.W) | Input.GetKey(KeyCode.S));
+            float posY = velocidad * Time.deltaTime * Input.GetAxisRaw("Vertical"); //asigna el movimiento del eje Y a posY
+>>>>>>> Stashed changes
             transform.position += new Vector3(0, posY, 0);  // PosY agrega el movimiento en el eje Y
         }
     }
@@ -52,7 +60,7 @@ public class playerMov : MonoBehaviour
     void salto(){
         bool saltando = Input.GetKey(KeyCode.Space); // se asigna si se preciono Spacio para saltar
         if(saltando && puedeSaltar){ //Se comprubea si se preciono Espacio y Puede saltar
-            sPlayerController.asignarVelocidad(1f);
+            asignarVelocidad(1f);
             posInicialSalto = transform.position.y; //Se asigna la posicion antes de saltar
             rb2d.gravityScale = 1; //Se activa la gravedad
             rb2d.AddForce(new Vector2(0, fuerzaSalto));
@@ -68,12 +76,16 @@ public class playerMov : MonoBehaviour
             rb2d.gravityScale = 0; //Desactiva la gravedad
             puedeSaltar = true;
             comprobandoSalto = false;
-            sPlayerController.asignarVelocidad(2f);
+            asignarVelocidad(2f);
             animator.SetBool("IsJumping", false);
             rb2d.constraints = RigidbodyConstraints2D.None; //Descongelamos la rotacion y Movimientos
             rb2d.constraints = RigidbodyConstraints2D.FreezeRotation; //Congelamos la rotación
         }else{
-            sPlayerController.asignarVelocidad(1f);
+            asignarVelocidad(1f);
         }
+    }
+
+    public void asignarVelocidad(float vel){
+        velocidad = vel;
     }
 }
