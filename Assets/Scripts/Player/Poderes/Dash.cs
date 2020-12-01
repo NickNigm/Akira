@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dash : MonoBehaviour
 {
 
     public playerMov sPlayerMov; //cominicamos con el script playerMov
     public playerController sPC; //cominicamos con el script playerController
+    public Text txtDash;
     public float fuerzaDash;
     public float desplazamiento; //La distancia maxima del desplazamiento
     public float inicioDash; //la pocision inicial antes de desplazarse
     public int energiaNecesaria;
+    public float timepoEnfriamiento;
+    public float tiempoActual;
     private Rigidbody2D rb2d;
     private SpriteRenderer sr;
 
+    bool couroutineStarted = false;
     public bool desplazandose = false;
     public bool puedeDash = true;
     public bool derecha; //para comprobar de que lado se ejecuta el dash derecha o izquierda
@@ -21,6 +26,7 @@ public class Dash : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        tiempoActual = timepoEnfriamiento;
     }
 
     // Update is called once per frame
@@ -28,6 +34,14 @@ public class Dash : MonoBehaviour
     {
         dash();
         if(desplazandose)comparacionDash(); //Comprobamos la distancia del dash
+        
+        if(couroutineStarted){
+            tiempoActual = tiempoActual - 1 * Time.deltaTime;
+            txtDash.text = "Enfriemieto: " + tiempoActual.ToString("f2");        
+        }
+        
+        if(couroutineStarted == false && sPC.energia >= energiaNecesaria) txtDash.text = "Dash Listo";
+        if(sPC.energia<energiaNecesaria) txtDash.text = "Sin Dash";
     }
 
     void dash(){
@@ -63,6 +77,16 @@ public class Dash : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.None; //activamos x,y,z y la rotacion
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation; //desactivamos la rotacion
         desplazandose = false;
+        StartCoroutine(enfriemientoDash(timepoEnfriamiento));
+    }
+
+    IEnumerator enfriemientoDash(float enfriamiento){
+        couroutineStarted = true;
+        //Debug.Log("Entro:" + couroutineStarted);
+        yield return new WaitForSeconds(enfriamiento);
+        couroutineStarted = false;
+        //Debug.Log("Salio");
         puedeDash = true;
+        tiempoActual = timepoEnfriamiento;
     }
 }

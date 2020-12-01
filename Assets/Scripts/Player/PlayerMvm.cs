@@ -12,11 +12,11 @@ public class PlayerMvm : MonoBehaviour
     /*Delimitamos el area en Y por las que nuestro personaje puede caminar*/
     static Vector2 LimiteY = new Vector2(-0.92f, 1.225f);
 
-    [SerializeField]
+    /*[SerializeField]
     float velVert;//Velocidad de movimiento Vertical
     [SerializeField]
     float velHorz;//Velocidad de movimiento Horizontal
-
+*/
     Rigidbody2D rb;//Rigidbody del personaje
     SpriteRenderer sr;//Spriterenderer del personaje
     Animator animator;//Animator
@@ -55,7 +55,7 @@ public class PlayerMvm : MonoBehaviour
         animator.SetBool("IsRunning", ctrl.magnitude !=0);
         
         //Velocidad con la que nos movemos
-        rb.velocity = new Vector2(ctrl.x * velHorz, ctrl.y * velVert);
+        //rb.velocity = new Vector2(ctrl.x * velHorz, ctrl.y * velVert);
         
         //Activamos nuestros limites de movimiento en el espacio Y
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, LimiteY.x, LimiteY.y)
