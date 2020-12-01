@@ -42,17 +42,10 @@ public class playerMov : MonoBehaviour
         if( posX != 0 ) sr.flipX = posX < 0; //Inivter el sprite al moverse atras en el eje X
 
         //Comprueba si el objeto puede saltar
-<<<<<<< Updated upstream
         if(puedeSaltar){
             //Cambia la animacion a Correr si se preciona A o D
             animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D));
-            float posY = sPlayerController.velocidad * Time.deltaTime * Input.GetAxisRaw("Vertical"); //asigna el movimiento del eje Y a posY
-=======
-        if(puedeSaltar && !Input.GetKey(KeyCode.LeftShift)){
-            //Cambia la animacion a Correr si se preciona A, S, D o W
-            animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.W) | Input.GetKey(KeyCode.S));
             float posY = velocidad * Time.deltaTime * Input.GetAxisRaw("Vertical"); //asigna el movimiento del eje Y a posY
->>>>>>> Stashed changes
             transform.position += new Vector3(0, posY, 0);  // PosY agrega el movimiento en el eje Y
         }
     }
