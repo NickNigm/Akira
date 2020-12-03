@@ -44,7 +44,7 @@ public class playerMov : MonoBehaviour
         //Comprueba si el objeto puede saltar
         if(puedeSaltar){
             //Cambia la animacion a Correr si se preciona A o D
-            animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D));
+            animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.S) | Input.GetKey(KeyCode.W));
             float posY = velocidad * Time.deltaTime * Input.GetAxisRaw("Vertical"); //asigna el movimiento del eje Y a posY
             transform.position += new Vector3(0, posY, 0);  // PosY agrega el movimiento en el eje Y
         }
