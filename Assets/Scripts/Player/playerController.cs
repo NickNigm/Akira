@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class playerController : MonoBehaviour
 {
 
+    public Shield sEscudo;
+
     public Text txtEnergia;
     public Text txtVida;
     public float energia;
@@ -18,7 +20,7 @@ public class playerController : MonoBehaviour
     }
 
     public void cambioVida(float vidaModificar, bool daño){
-        if(daño) vida -= vidaModificar;
+        if(daño && sEscudo.activarDaño == true) vida -= vidaModificar;
         else vida += vida;
         txtVida.text = "Vida: " +vida.ToString("f2")+ "%";
     }

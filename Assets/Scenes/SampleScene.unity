@@ -232,7 +232,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9698c15251ec34fa384370263ee961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sPC: {fileID: 820832947}
+  velocidad: 50
   incremento: 2.5
+  decremento: 0.2
+  costoEnergia: 10
+  minimoEnergia: 10
+  expandiendose: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +322,84 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &765682922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 765682923}
+  - component: {fileID: 765682925}
+  - component: {fileID: 765682924}
+  m_Layer: 5
+  m_Name: Escudo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &765682923
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765682922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1098793173}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -153.5, y: 4.8}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &765682924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765682922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 17
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Escudo: Listo'
+--- !u!222 &765682925
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765682922}
+  m_CullTransparentMesh: 0
 --- !u!1 &820832941
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +411,7 @@ GameObject:
   - component: {fileID: 820832944}
   - component: {fileID: 820832943}
   - component: {fileID: 820832949}
+  - component: {fileID: 820832950}
   - component: {fileID: 820832947}
   - component: {fileID: 820832952}
   - component: {fileID: 820832942}
@@ -475,6 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b653baec7f1b4d44f94b968f7c1abb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sEscudo: {fileID: 0}
   txtEnergia: {fileID: 1829303350}
   txtVida: {fileID: 1343553686}
   energia: 100
@@ -524,6 +610,28 @@ MonoBehaviour:
   desplazandose: 0
   puedeDash: 1
   derecha: 0
+--- !u!114 &820832950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820832941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556d156b14a00ac4e98d6b19ea073953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sPC: {fileID: 820832947}
+  txtEscudo: {fileID: 765682924}
+  puedeEscudo: 1
+  "activarDa\xF1o": 1
+  iniciarContador: 0
+  timepoActivo: 2
+  enfriamientoEscudo: 2
+  costoEnergia: 10
+  enfriamientoHabilidad: 3
+  tiempoEnfriamientoActivo: 0
 --- !u!114 &820832952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,6 +809,7 @@ RectTransform:
   - {fileID: 1343553685}
   - {fileID: 1829303349}
   - {fileID: 1712756108}
+  - {fileID: 765682923}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
