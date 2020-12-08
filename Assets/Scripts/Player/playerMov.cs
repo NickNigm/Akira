@@ -6,6 +6,7 @@ public class playerMov : MonoBehaviour
 {
 
     public playerController sPlayerController;
+    public BasicAttacks sBA;    
 
     //Componentes del objeto
     private Rigidbody2D rb2d;
@@ -81,4 +82,5 @@ public class playerMov : MonoBehaviour
     public void asignarVelocidad(float vel){
         velocidad = vel;
     }
+
 }
