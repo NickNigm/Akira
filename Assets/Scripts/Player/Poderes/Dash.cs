@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class Dash : MonoBehaviour
 {
 
-    public GameObject pDash;
+    public GameObject derDashS;
+    public GameObject izqDashS;
+    
     public playerMov sPlayerMov; //cominicamos con el script playerMov
     public playerController sPC; //cominicamos con el script playerController
     public Text txtDash;
@@ -48,7 +50,6 @@ public class Dash : MonoBehaviour
     void dash(){
         bool dashing = Input.GetKey(KeyCode.LeftShift);
         if(dashing && puedeDash && (sPC.energia>=energiaNecesaria)){ //Puede hacer el dash solo si; se preciono lshifth, puede puedeDash=true y la energia es igual o mayor a la necesaria
-            pDash.GetComponent<ParticleSystem>().Play();
             desplazandose = true;
             inicioDash = transform.position.x; //Guardamos la pocision del dash
             rb2d.gravityScale = 1;
@@ -56,9 +57,12 @@ public class Dash : MonoBehaviour
             //rb2d.AddForce(new Vector2(fuerzaDash, 0));
             if(sr.flipX){//tenerminamos la direccion del dash
                 rb2d.AddForce(Vector2.left * fuerzaDash);
-                derecha = false; 
+                derDashS.GetComponent<ParticleSystem>().Play();
+                //Iniciar sistema de particulas
+                derecha = false;
             }else{//tenerminamos la direccion del dash
                 rb2d.AddForce(Vector2.right * fuerzaDash);
+                izqDashS.GetComponent<ParticleSystem>().Play();
                 derecha = true;
             }
             puedeDash = false;
@@ -80,7 +84,8 @@ public class Dash : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation; //desactivamos la rotacion
         desplazandose = false;
         StartCoroutine(enfriemientoDash(timepoEnfriamiento));
-        pDash.GetComponent<ParticleSystem>().Stop();       
+        derDashS.GetComponent<ParticleSystem>().Stop();
+        izqDashS.GetComponent<ParticleSystem>().Stop();       
     }
 
     IEnumerator enfriemientoDash(float enfriamiento){
