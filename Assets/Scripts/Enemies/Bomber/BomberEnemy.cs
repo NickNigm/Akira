@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BomberEnemy : MonoBehaviour
 {
+    public Transform bombExplo;
+    public GameObject prefabExplosion;
+    private ParticleSystem pExplosion;
     public float vel;
     public float stopDistance;
     public float retreatDistance;
@@ -16,6 +19,8 @@ public class BomberEnemy : MonoBehaviour
 
     private void Start()
     {
+        pExplosion = prefabExplosion.GetComponent<ParticleSystem>();
+        pExplosion.Stop(); 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -53,6 +58,7 @@ public class BomberEnemy : MonoBehaviour
 
         if(tiempreEntreLazamientos <= 0)
             {
+                
                 Instantiate(bomba, transform.position, Quaternion.identity);
                 tiempreEntreLazamientos = empezarTiempoEntreLanzamientos;
                 
@@ -65,5 +71,10 @@ public class BomberEnemy : MonoBehaviour
         sr.flipX = true;
         else
         sr.flipX = false;
+    }
+
+    public void ReproducirAnim()
+    {
+        pExplosion.Play();
     }
 }

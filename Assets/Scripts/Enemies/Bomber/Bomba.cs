@@ -5,16 +5,13 @@ using UnityEngine;
 public class Bomba : MonoBehaviour
 {
     //public playerController spc;
-    public GameObject prefabExplosion;
-    private ParticleSystem pExplosion;
+    public BomberEnemy sbe;
     public float vel;
     private Transform player;
     private Vector2 objetivo;
 
     private void Start()
     {
-        pExplosion = prefabExplosion.GetComponent<ParticleSystem>();
-        pExplosion.Stop(); 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         objetivo = new Vector2(player.position.x, player.position.y);
         var dir = -transform.right + Vector3.up;
@@ -24,18 +21,26 @@ public class Bomba : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(transform.position, objetivo, vel * Time.deltaTime);
         if(transform.position.x == objetivo.x && transform.position.y == objetivo.y)
+        {
+            //sbe.bombExplo.position = this.transform.position;
+            //sbe.ReproducirAnim();  
             DestroyBomb();
+        }
+            
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Player"))
-        {            
+        {   
+            sbe.prefabExplosion.transform.position = this.transform.position;
+            //sbe.ReproducirAnim();      
             DestroyBomb();
         }
     }
 
     void DestroyBomb()
     {
+        
         Destroy(gameObject);
     }
 }
