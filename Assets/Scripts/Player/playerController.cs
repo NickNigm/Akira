@@ -7,11 +7,20 @@ public class playerController : MonoBehaviour
 {
 
     public Shield sEscudo;
-
+    public GameObject prefabSangrar;
+    private ParticleSystem pSangrar;
+    private Renderer colorear;
     public Text txtEnergia;
     public Text txtVida;
     public float energia;
     public float vida;
+
+    void Start()
+    {
+        pSangrar = prefabSangrar.GetComponent<ParticleSystem>();
+        colorear = GetComponent<Renderer>();
+        pSangrar.Stop();    
+    }
 
     public void cambioEnergia(float energiaModificar, bool ocupo){
         if(ocupo) energia -= energiaModificar;
@@ -20,7 +29,10 @@ public class playerController : MonoBehaviour
     }
 
     public void cambioVida(float vidaModificar, bool daño){
-        if(daño && sEscudo.activarDaño == true) vida -= vidaModificar;
+        if(daño && sEscudo.activarDaño == true){
+            pSangrar.Play();
+            vida -= vidaModificar;
+        } 
         else vida += vida;
         txtVida.text = "Vida: " +vida.ToString("f2")+ "%";
     }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Shield : MonoBehaviour
 {
     public playerController sPC;
+    public GameObject prefabEscudo;
+    private ParticleSystem pEscudo;
     public Text txtEscudo;
     private Renderer colorear;
     public bool puedeEscudo; //Variable para saber si puede usar escudo
@@ -19,6 +21,8 @@ public class Shield : MonoBehaviour
 
     void Start()
     {
+        pEscudo = prefabEscudo.GetComponent<ParticleSystem>();
+        pEscudo.Stop();
         colorear = GetComponent<Renderer>();
         timepoActivo = enfriamientoEscudo;
         puedeEscudo = true;
@@ -44,7 +48,7 @@ public class Shield : MonoBehaviour
     void Escudo(){
         if(timepoActivo>0){
             timepoActivo -= Time.deltaTime;
-            cambiarColor(Color.cyan);
+            cambiarColor(Color.green);
             txtEscudo.text = "Usando Escudo";
         }else{
             activarDaño = true;
@@ -57,6 +61,7 @@ public class Shield : MonoBehaviour
     void iniciar(){
         bool protegiendo = Input.GetKey(KeyCode.E);
         if(protegiendo && puedeEscudo && sPC.energia >= costoEnergia){
+            pEscudo.Play();
             puedeEscudo = false;
             activarDaño = false;
             sPC.cambioEnergia(costoEnergia, true);
