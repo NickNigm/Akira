@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class Dash : MonoBehaviour
 {
 
-    public GameObject derDashS;
-    public GameObject izqDashS;
+    public GameObject prefabDash;
+    private ParticleSystem pDash;
     
     public playerMov sPlayerMov; //cominicamos con el script playerMov
     public playerController sPC; //cominicamos con el script playerController
@@ -29,6 +29,8 @@ public class Dash : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        pDash = prefabDash.GetComponent<ParticleSystem>();
+        pDash.Stop();
         tiempoActual = timepoEnfriamiento;
     }
 
@@ -50,19 +52,21 @@ public class Dash : MonoBehaviour
     void dash(){
         bool dashing = Input.GetKey(KeyCode.LeftShift);
         if(dashing && puedeDash && (sPC.energia>=energiaNecesaria)){ //Puede hacer el dash solo si; se preciono lshifth, puede puedeDash=true y la energia es igual o mayor a la necesaria
+            
             desplazandose = true;
             inicioDash = transform.position.x; //Guardamos la pocision del dash
+            prefabDash.transform.position = transform.position;
+            pDash.Play();
             rb2d.gravityScale = 1;
             if(sPlayerMov.puedeSaltar==true)rb2d.constraints = RigidbodyConstraints2D.FreezePositionY; // conngelamos en y solo si no esta saltando
             //rb2d.AddForce(new Vector2(fuerzaDash, 0));
             if(sr.flipX){//tenerminamos la direccion del dash
                 rb2d.AddForce(Vector2.left * fuerzaDash);
-                derDashS.GetComponent<ParticleSystem>().Play();
                 //Iniciar sistema de particulas
                 derecha = false;
             }else{//tenerminamos la direccion del dash
                 rb2d.AddForce(Vector2.right * fuerzaDash);
-                izqDashS.GetComponent<ParticleSystem>().Play();
+                
                 derecha = true;
             }
             puedeDash = false;
@@ -83,9 +87,7 @@ public class Dash : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.None; //activamos x,y,z y la rotacion
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation; //desactivamos la rotacion
         desplazandose = false;
-        StartCoroutine(enfriemientoDash(timepoEnfriamiento));
-        derDashS.GetComponent<ParticleSystem>().Stop();
-        izqDashS.GetComponent<ParticleSystem>().Stop();       
+        StartCoroutine(enfriemientoDash(timepoEnfriamiento));    
     }
 
     IEnumerator enfriemientoDash(float enfriamiento){

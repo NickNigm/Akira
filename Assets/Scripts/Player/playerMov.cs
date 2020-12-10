@@ -6,7 +6,9 @@ public class playerMov : MonoBehaviour
 {
 
     public playerController sPlayerController;
-    public BasicAttacks sBA;    
+    public BasicAttacks sBA;
+    public GameObject prefabSalto;
+    private ParticleSystem pSalto;
 
     //Componentes del objeto
     private Rigidbody2D rb2d;
@@ -23,6 +25,8 @@ public class playerMov : MonoBehaviour
 
     //Iniciamos los componenetes
     void Start(){
+        pSalto = prefabSalto.GetComponent<ParticleSystem>();
+        pSalto.Stop();
         asignarVelocidad(2f);
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -66,6 +70,7 @@ public class playerMov : MonoBehaviour
 
     public void compararPosicion(){
         if(posInicialSalto > transform.position.y){ //Comprueba si la posicion antes de saltar es menor o igual a la posicion que tiene actualemtne
+            pSalto.Play();
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionY; //Congela la posicion en Y
             rb2d.gravityScale = 0; //Desactiva la gravedad
             puedeSaltar = true;
