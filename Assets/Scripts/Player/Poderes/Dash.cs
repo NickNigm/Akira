@@ -8,6 +8,9 @@ public class Dash : MonoBehaviour
 
     public GameObject prefabDash;
     private ParticleSystem pDash;
+
+    public AudioSource sonido;
+    public AudioClip sdDash;
     
     public playerMov sPlayerMov; //cominicamos con el script playerMov
     public playerController sPC; //cominicamos con el script playerController
@@ -27,6 +30,7 @@ public class Dash : MonoBehaviour
     public bool derecha; //para comprobar de que lado se ejecuta el dash derecha o izquierda
     void Start()
     {
+        sonido = GetComponent<AudioSource>();
         rb2d = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         pDash = prefabDash.GetComponent<ParticleSystem>();
@@ -52,7 +56,8 @@ public class Dash : MonoBehaviour
     void dash(){
         bool dashing = Input.GetKey(KeyCode.LeftShift);
         if(dashing && puedeDash && (sPC.energia>=energiaNecesaria)){ //Puede hacer el dash solo si; se preciono lshifth, puede puedeDash=true y la energia es igual o mayor a la necesaria
-            
+            sonido.clip = sdDash;
+            sonido.Play();
             desplazandose = true;
             inicioDash = transform.position.x; //Guardamos la pocision del dash
             prefabDash.transform.position = transform.position;
