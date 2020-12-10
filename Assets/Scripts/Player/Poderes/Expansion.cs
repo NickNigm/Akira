@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class Expansion : MonoBehaviour
 {
-
+    public GameObject myPrefab;
+    private ParticleSystem pExpancion;
     public playerController sPC;
-
     public float velocidad = 50f;
     public float incremento = 2.5f;
     public float decremento = 0.2f;
     public float costoEnergia = 100f;
     public float minimoEnergia = 10f;
-
     public bool expandiendose = false;
+
+    public bool reproducir;
     private void Start()
     {
-        
+        pExpancion = myPrefab.GetComponent<ParticleSystem>();
+        pExpancion.Stop();
     }
 
     private void Update()
@@ -26,8 +28,18 @@ public class Expansion : MonoBehaviour
 
     void comprobarExpancion(){
         expandiendose = Input.GetKey(KeyCode.Q);
-        if(expandiendose && sPC.energia>=minimoEnergia) expandir();
-        else comprimir();
+        if(expandiendose && sPC.energia>=minimoEnergia){
+            expandir();
+            if(reproducir){
+                pExpancion.Play();
+                reproducir = false;
+            }
+        }
+        else{
+            comprimir();
+            reproducir = true;
+            pExpancion.Stop();
+        }
     }
 
     void expandir(){
