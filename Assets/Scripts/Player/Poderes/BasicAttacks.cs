@@ -5,12 +5,15 @@ using UnityEngine;
 public class BasicAttacks : MonoBehaviour
 {
     private Animator animator;
-
+    public AudioSource sonido;
+    public AudioClip espada1;
+    public AudioClip espada2;
     
     
     void Start()
     {
         animator = GetComponent<Animator>();
+        sonido = GetComponent<AudioSource>();
     }
 
     
@@ -27,6 +30,8 @@ public class BasicAttacks : MonoBehaviour
     {
         if(Input.GetMouseButton(0)){
             atacando = true;
+            sonido.clip = espada1;
+            sonido.Play();
         }
         
         if(atacando){
@@ -45,6 +50,8 @@ public class BasicAttacks : MonoBehaviour
     {
         if(Input.GetMouseButton(1)){
             atacando2 = true;
+            sonido.clip = espada2;
+            sonido.Play();
         }
         
         if(atacando2){

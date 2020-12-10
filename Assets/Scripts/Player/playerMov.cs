@@ -9,6 +9,10 @@ public class playerMov : MonoBehaviour
     public BasicAttacks sBA;
     public GameObject prefabSalto;
     private ParticleSystem pSalto;
+    public AudioSource sonido;
+    public AudioClip sdCaminar;
+    public AudioClip sdSaltar;
+    public AudioClip sdCaer;
 
     //Componentes del objeto
     private Rigidbody2D rb2d;
@@ -25,6 +29,7 @@ public class playerMov : MonoBehaviour
 
     //Iniciamos los componenetes
     void Start(){
+        sonido = GetComponent<AudioSource>();
         pSalto = prefabSalto.GetComponent<ParticleSystem>();
         pSalto.Stop();
         asignarVelocidad(2f);
@@ -43,11 +48,15 @@ public class playerMov : MonoBehaviour
     public void Mover() {
         float posX = velocidad * Time.deltaTime * Input.GetAxisRaw("Horizontal"); //asigna el movimiento del eje X a posX
         transform.position += new Vector3(posX, 0, 0); // PosX agrega el movimiento en el eje X
-        
         if( posX != 0 ) sr.flipX = posX < 0; //Inivter el sprite al moverse atras en el eje X
-
         //Comprueba si el objeto puede saltar
         if(puedeSaltar){
+            if(Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.S) | Input.GetKey(KeyCode.W)){
+                sonido.clip = sdCaminar;
+                sonido.Play();
+            }else{
+                
+            }
             //Cambia la animacion a Correr si se preciona A o D
             animator.SetBool("IsRunning", Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.S) | Input.GetKey(KeyCode.W));
             float posY = velocidad * Time.deltaTime * Input.GetAxisRaw("Vertical"); //asigna el movimiento del eje Y a posY
@@ -58,6 +67,8 @@ public class playerMov : MonoBehaviour
     void salto(){
         bool saltando = Input.GetKey(KeyCode.Space); // se asigna si se preciono Spacio para saltar
         if(saltando && puedeSaltar){ //Se comprubea si se preciono Espacio y Puede saltar
+            sonido.clip = sdSaltar;
+            sonido.Play();
             asignarVelocidad(1f);
             posInicialSalto = transform.position.y; //Se asigna la posicion antes de saltar
             rb2d.gravityScale = 1; //Se activa la gravedad
@@ -70,6 +81,8 @@ public class playerMov : MonoBehaviour
 
     public void compararPosicion(){
         if(posInicialSalto > transform.position.y){ //Comprueba si la posicion antes de saltar es menor o igual a la posicion que tiene actualemtne
+            sonido.clip = sdCaer;
+            sonido.Play();
             pSalto.Play();
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionY; //Congela la posicion en Y
             rb2d.gravityScale = 0; //Desactiva la gravedad

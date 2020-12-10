@@ -7,6 +7,8 @@ public class Expansion : MonoBehaviour
     public GameObject myPrefab;
     private ParticleSystem pExpancion;
     public playerController sPC;
+    public AudioSource sonido;
+    
     public float velocidad = 50f;
     public float incremento = 2.5f;
     public float decremento = 0.2f;
@@ -19,6 +21,7 @@ public class Expansion : MonoBehaviour
     {
         pExpancion = myPrefab.GetComponent<ParticleSystem>();
         pExpancion.Stop();
+        sonido = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -31,6 +34,7 @@ public class Expansion : MonoBehaviour
         if(expandiendose && sPC.energia>=minimoEnergia){
             expandir();
             if(reproducir){
+                sonido.Play();
                 pExpancion.Play();
                 reproducir = false;
             }
@@ -39,6 +43,7 @@ public class Expansion : MonoBehaviour
             comprimir();
             reproducir = true;
             pExpancion.Stop();
+            sonido.Stop();
         }
     }
 

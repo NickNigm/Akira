@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Shield : MonoBehaviour
 {
     public playerController sPC;
+    public AudioSource sonido;
+    public AudioClip sdEscudo;
     public GameObject prefabEscudo;
     private ParticleSystem pEscudo;
     public Text txtEscudo;
@@ -21,6 +23,7 @@ public class Shield : MonoBehaviour
 
     void Start()
     {
+        sonido = GetComponent<AudioSource>();
         pEscudo = prefabEscudo.GetComponent<ParticleSystem>();
         pEscudo.Stop();
         colorear = GetComponent<Renderer>();
@@ -62,6 +65,8 @@ public class Shield : MonoBehaviour
         bool protegiendo = Input.GetKey(KeyCode.E);
         if(protegiendo && puedeEscudo && sPC.energia >= costoEnergia){
             pEscudo.Play();
+            sonido.clip = sdEscudo;
+            sonido.Play();
             puedeEscudo = false;
             activarDaño = false;
             sPC.cambioEnergia(costoEnergia, true);
