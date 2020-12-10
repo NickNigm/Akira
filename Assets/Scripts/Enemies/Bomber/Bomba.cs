@@ -30,14 +30,13 @@ public class Bomba : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") || other.CompareTag("Suelo"))
         {   
             sbe.prefabExplosion.transform.position = this.transform.position;
             //sbe.ReproducirAnim();      
             DestroyBomb();
         }
     }
-
     void DestroyBomb()
     {
         
