@@ -425,6 +425,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1146928271366228451}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &745877469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1146928270899815998, guid: 57e156b9dfe6a534fae0646875cd1955,
+    type: 3}
+  m_PrefabInstance: {fileID: 1146928271366228451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &765682922
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,9 +463,9 @@ RectTransform:
   m_Father: {fileID: 1098793173}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -153.5, y: 4.8}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 92.5, y: -133.2}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765682924
@@ -669,6 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sEscudo: {fileID: 820832950}
+  prefabSangrar: {fileID: 745877469}
   txtEnergia: {fileID: 1829303350}
   txtVida: {fileID: 1343553686}
   energia: 100000
@@ -1068,9 +1075,9 @@ RectTransform:
   m_Father: {fileID: 1098793173}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -153.5, y: 39.2}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 92.5, y: -98.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712756109
